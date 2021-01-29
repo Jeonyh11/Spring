@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<bean id="user" class="kr.or.ddit.user.model.UserVo">
+		<property name="reg_dt" value="2021-01-29"></property>
+		<property name="hire_dt" value="01-29-2021"></property>
+		<property name="price" value="1,000"></property>
+	</bean>
+	
+<!-- 	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean"> -->
+<!-- 		<property name="converters"> -->
+<!-- 			<set> -->
+<!-- 				<bean class="kr.or.ddit.ioc.convert.CustomDateConverter"> -->
+<!-- 					<property name="dateFormat" value="yyyy-dd-MM"></property> -->
+<!-- 				</bean> -->
+<!-- 			</set> -->
+<!-- 		</property> -->
+<!-- 	</bean> -->
+
+<!-- 	빈 아이디와 클래스는 스프링에서 제공하는 것을 써야 한다.데이터타입 변환을 위해서 -->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		
+	</bean>
+</beans>
