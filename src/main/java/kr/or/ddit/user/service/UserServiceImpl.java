@@ -9,7 +9,7 @@ import kr.or.ddit.user.model.UserVo;
 import kr.or.ddit.user.repository.UserDao;
 
 
-@Service
+@Service("userService")
 public class UserServiceImpl implements UserService{
 	
 	@Resource(name="userDao")
