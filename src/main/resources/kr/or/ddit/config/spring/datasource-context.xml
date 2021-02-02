@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+	 
+	 <context:property-placeholder 
+	 	location="classpath:/kr/or/ddit/config/db/dbinfo.properties"/>
+	 
+	 <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource">
+	 	<property name="driverClassName" value="${jdbc.driverClassName}"></property>
+	 	<property name="url" value="${jdbc.url}"></property>
+	 	<property name="username" value="${jdbc.username}"></property>
+	 	<property name="password" value="${jdbc.password}"></property>
+	 	<property name="initialSize" value="3"></property>
+	 </bean>
+	 
+	 <!--  class 이름 class이름
+	 		FactoryBean 인터페이스를 구현한 클래스를 스플이 빈으로 등록할 경우
+	 		FactoryBean 인터페이스의 getObject 메소드가 리턴하는 객체를 스프링 빈으로 등록한다
+	 		
+	 		SqlSessionFactory 스프링 빈은 SqlSessionFactoryBean -->
+	 
+	 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	 	<property name="configLocation" 
+	 				value="classpath:/kr/or/ddit/config/mybatis/mybatis-config.xml"></property>
+	    <property name="dataSource" ref="dataSource"></property>
+	 </bean>
+	 
+	 <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+	 	<constructor-arg ref="sqlSessionFactory"></constructor-arg>
+	 </bean>
+</beans>

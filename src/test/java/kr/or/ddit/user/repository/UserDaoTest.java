@@ -1,53 +1,135 @@
 package kr.or.ddit.user.repository;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import kr.or.ddit.common.model.PageVo;
+import kr.or.ddit.test.config.ModelTestConfig;
 import kr.or.ddit.user.model.UserVo;
-import kr.or.ddit.user.repository.UserDao;
-import kr.or.ddit.user.service.UserService;
 
-//스프링 환경에서 junit 코드를 실행 ==> junit 코드도 스프링 빈으로 등록
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration("classpath:/kr/or/ddit/ioc/ioc.xml")
-public class UserDaoTest {
+public class UserDaoTest extends ModelTestConfig{
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserDaoTest.class);
 
 	@Resource(name = "userDao")
 	private UserDao userDao;
 	
-	@Resource(name = "userService")
-	private UserService userService;
+//	@Resource(name = "userDao")
+//	private userDao userDao;
 	
 	@Test
 	public void getUserTest() {
 		/***Given***/
-		String userid = "brown";
+		String userid = "cony";
 
 		/***When***/
-		UserVo userVo = userDao.getUser(userid);
+		UserVo userVo = userDao.selectUser(userid);
 
 		/***Then***/
-		assertEquals("브라운", userVo.getUsernm());
+		assertEquals("코니", userVo.getUsernm());
 		
+	}
+	
+//	@Test
+//	public void getUserTest2() {
+//		/***Given***/
+//		String userid = "brown";
+//
+//		/***When***/
+//		UserVo userVo = userDao.selectUser(userid);
+//		
+//		/***Then***/
+//		assertEquals("브라운", userVo.getUsernm());
+//	}
+	
+	@Test
+	public void selectAllUserTest() {
+		/***Given***/
+		
+
+		/***When***/
+		List<UserVo> userVo = userDao.selectAllUser();
+		
+		/***Then***/
+		
+		assertNotNull(userVo);
 	}
 	
 	@Test
-	public void getUserTest2() {
+	public void selectPagingUser() {
 		/***Given***/
-		String userid = "brown";
+		 int page = 1;
+		 int pageSize = 5;
+		PageVo vo = new PageVo(page, pageSize);
 
 		/***When***/
-		UserVo userVo = userService.getUser(userid);
+		List<UserVo> userVo = userDao.selectPagingUser(vo );
 		
 		/***Then***/
-		assertEquals("브라운", userVo.getUsernm());
+		
+		assertNotNull(userVo);
 	}
 	
+	@Test
+	public void selectAllUserCntTest() {
+		/***Given***/
+		
 
+		/***When***/
+		int userCnt = userDao.selectAllUserCnt();
+		
+		/***Then***/
+		
+		assertNotNull(userCnt);
+	}
+	
+	@Test
+	public void modifyUserTest() {
+		/***Given***/
+		UserVo userVo = new UserVo("cici","브라운이야","brownPass",new Date(), "dsf","곰"
+									,"주소2","12","fsd","fdsf"); 
+
+		/***When***/
+		int userCnt = userDao.modifyUser(userVo);
+		
+		/***Then***/
+		
+		assertEquals(1,userCnt);
+	}
+	
+	@Test
+	public void insertUserTest() {
+		/***Given***/
+		UserVo userVo = new UserVo("browns","브라운이야","brownPasss",new Date(), "dsf","곰"
+									,"주소2","12","fsd","fdsf"); 
+
+		/***When***/
+		int cnt = userDao.insertUser(userVo);
+		
+		/***Then***/
+		
+		assertEquals(1,cnt);
+	}
+
+	@Test
+	public void deleteUserTest() {
+		/***Given***/
+		String userid = "browns";
+
+		/***When***/
+		int cnt = userDao.deleteUser(userid);
+		
+		/***Then***/
+		
+		assertEquals(1, cnt);
+	}
 }

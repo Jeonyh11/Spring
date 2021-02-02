@@ -1,7 +1,13 @@
 package kr.or.ddit.user.repository;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.ddit.common.model.PageVo;
 import kr.or.ddit.user.model.UserVo;
 
 // bean id ="" class=""
@@ -16,14 +22,60 @@ import kr.or.ddit.user.model.UserVo;
 @Repository("userDao")
 public class UserDaoImpl implements UserDao{
 
+	@Resource(name = "sqlSessionTemplate")
+	private SqlSessionTemplate template;
+	
 	@Override
-	public UserVo getUser(String userid) {
-		//  원래는 데이터베이스에서 조회를 해야하나 개발 초기단계라
-		// 설정이 완료되지 않음, 현재 확인하려고 하는 기능은 스프링 컨테이너에 초점을 맞추기 위해
-		// new 연산자를 통해 생성한 vo객체를 반환
+	public UserVo selectUser(String userid) {
+			
+		return template.selectOne("users.selectUser", userid);
+		
+	}
+
+	@Override
+	public List<UserVo> selectAllUser() {
+		List<UserVo> userList = template.selectList("users.selectAllUser");
+		return userList;
+	}
+
+	@Override
+	public List<UserVo> selectPagingUser(PageVo vo) {
+		List<UserVo> userList = template.selectList("users.selectPagingUser", vo);
+		return userList;
+	}
+
+	@Override
+	public int selectAllUserCnt() {
+		int cnt = template.selectOne("users.selectAllUserCnt");
+		return cnt;
+	}
+
+	@Override
+	public int modifyUser(UserVo userVo) {
+		int updateCnt = template.update("users.modifyUser", userVo);
 		
 		
-		return new UserVo("brown", "브라운");
+//		if(updateCnt == 1) {
+//			template.commit();
+//		} else {
+//			template.rollback();
+//		}
+		return updateCnt;
+	}
+
+	@Override
+	public int insertUser(UserVo userVo) {
+		int cnt = template.insert("users.insertUser", userVo);
+		
+		return cnt;
+	}
+
+	@Override
+	public int deleteUser(String userid) {
+		int cnt = template.delete("users.deleteUser", userid);
+		
+	
+		return cnt;
 	}
 
 }

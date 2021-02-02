@@ -13,8 +13,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import kr.or.ddit.user.model.UserVo;
+@ContextConfiguration(locations = {"classpath:/kr/or/ddit/ioc/typeConversion.xml",	
+"classpath:/kr/or/ddit/config/spring/datasource-context.xml"})
 
-@ContextConfiguration("classpath:/kr/or/ddit/ioc/typeConversion.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TypeConversionTest {
 
