@@ -11,4 +11,13 @@
       <context:include-filter type="annotation" expression="org.springframework.stereotype.Repository"/>
    </context:component-scan>
 	
+<!-- 	messageSource 등록 -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<value>classpath:/kr/or/ddit/msg/error/error</value> <!--  하위 경로까지 모두 접근-->
+				<value>classpath:/kr/or/ddit/msg/msg/msg</value>
+			</list>
+		</property>
+	</bean>	
 </beans>

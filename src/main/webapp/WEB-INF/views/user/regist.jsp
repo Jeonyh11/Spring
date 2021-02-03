@@ -2,6 +2,9 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+ <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+ <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -53,6 +56,7 @@
 	
 	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 
+	
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-sm-3 col-md-2 sidebar">
@@ -70,6 +74,12 @@
 				
 							<input type="text" class="form-control" id="userid" name="userid" 
 												placeholder="사용자 아이디" value="${param.userid }">
+							
+							
+							<span style="color:red">
+								<form:errors path="userVo.userid">
+									</form:errors></span>
+							
 						<input type="file" class="form-control" name="profile"/>
 						</div>
 						
@@ -78,7 +88,9 @@
 					<div class="form-group">
 						<label for="userNm" class="col-sm-2 control-label">사용자 이름</label>
 						<div class="col-sm-8">
-					
+
+							
+							
 							<input type="text" class="form-control" id="usernm" name="usernm" 
 										placeholder="사용자 이름" value="${param.usernm }">
 						</div>

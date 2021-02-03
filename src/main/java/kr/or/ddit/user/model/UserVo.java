@@ -2,10 +2,15 @@ package kr.or.ddit.user.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.Size;
+
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
 public class UserVo {
+	
+	
+	@Size(min=5)
 	private String userid;
 	private String usernm;
 	private String pass;

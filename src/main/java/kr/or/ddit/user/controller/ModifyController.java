@@ -56,7 +56,7 @@ public class ModifyController {
 			
 			try {
 				profile.transferTo(new File(userVo.getRealfilename()));
-				success = userService.modifyUser(userVo);
+				
 			} catch (IllegalStateException | IOException e) {
 				e.printStackTrace();
 			}

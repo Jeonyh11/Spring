@@ -6,23 +6,9 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<meta name="description" content="">
-	<meta name="author" content="">
-
-	<title>pagingUser</title>
-
-	<%@ include file="/WEB-INF/views/common/common_lib.jsp" %>
 	
 	<script src="/js/jquery/jquery-1.12.4.js"></script>
-	<link href="${cp}/css/dashboard.css" rel="stylesheet">
-	<link href="${cp}/css/blog.css" rel="stylesheet">
 	
 	<script>
 		// 문서 로딩이 완료되고 나서 실행되는 영역
@@ -37,29 +23,18 @@
 			})
 		});
 	</script>
-</head>
 
-<body>
-	<form id="frm" action="${cp}/user/detail">
+
+
+	<form id="frm" action="${cp}/user/detailTiles">
 	
 		<input type="hidden" id="userid" name="userid" value=""/>
-<!-- 		$('#userid').val(userid); -->
-<!-- 				$('#frm').submit(); -->
-	</form>
-	<%@ include file="/WEB-INF/views/common/header.jsp" %>
 
-	<div class="container-fluid">
-		<div class="row">
-				
-			<div class="col-sm-3 col-md-2 sidebar">
-				<%@ include file="/WEB-INF/views/common/left.jsp" %>
-			</div>
-			
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	</form>
 
 				<div class="row">
 					<div class="col-sm-8 blog-main">
-						<h2 class="sub-header">사용자</h2>
+						<h2 class="sub-header">사용자(tiles)</h2>
 						<div class="table-responsive">
 							<table class="table table-striped">
 								<tr>
