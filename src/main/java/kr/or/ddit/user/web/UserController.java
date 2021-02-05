@@ -125,6 +125,53 @@ public class UserController {
 		return "tiles.user.pagingUser";
 	}
 	
+	//사용자 리스트가 없는 상태의 화면만 응답으로 생성
+	@RequestMapping("pagingUserAjaxView")
+	public String pagingUserAjaxView() {
+		
+		return "tiles.user.pagingUserAjax";
+	}
+	
+	
+	@RequestMapping("pagingUserAjax")
+	public String pagingUserAjax(@RequestParam(defaultValue = "1") int page,
+									@RequestParam(defaultValue = "5")int pageSize,
+										Model model) {
+		logger.debug("page : {}, pageSize : {} ", page, pageSize);
+		
+		PageVo pageVo = new PageVo(page, pageSize); 
+		
+		Map<String, Object> map = userService.selectPagingUser(pageVo);
+		
+		int userCnt = (int) map.get("userCnt");
+		
+		int pagination = (int) Math.ceil((double)userCnt/pageSize);
+		
+		model.addAttribute("userList", map.get("userList"));		
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("pageVo", pageVo);
+		
+		//문자열로 만들어주는 jsonView 쪽
+		return "jsonView";
+	}
+	
+	@RequestMapping("pagingUserAjaxHtml")
+	public String pagingUserAjaxHtml(@RequestParam(defaultValue = "1") int page,
+									@RequestParam(defaultValue = "5")int pageSize,
+										Model model) {
+		
+		
+		PageVo pageVo = new PageVo(page, pageSize); 
+		
+		model.addAttribute(userService.selectPagingUser(pageVo));
+		
+		//문자열로 만들어주는 jsonView 쪽
+		return "user/pagingUserAjaxHtml";
+		
+		//pagingUserAjaxHtml => /WEB-INF/views/user/pagingUserAjaxHtml.jsp
+	}
+	
+	
 	@RequestMapping("profile")
 	public void profile(HttpServletResponse resp, String userid, HttpServletRequest req) {
 		resp.setContentType("image");

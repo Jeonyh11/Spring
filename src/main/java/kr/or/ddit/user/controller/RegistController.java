@@ -34,6 +34,12 @@ public class RegistController {
 		return "user/regist";
 	}
 	
+	@RequestMapping(path = "viewLANG", method= {RequestMethod.GET})
+	public String registLANGView() {
+		
+		return "tiles.user.regist";
+	}
+	
 	//BindingResult 객체는 command 객체 바로 뒤에 인자로 기술해야한다.
 	@RequestMapping(path="save", method= {RequestMethod.POST})
 	public String registSave(@Valid UserVo userVo, BindingResult result, MultipartFile profile) {
