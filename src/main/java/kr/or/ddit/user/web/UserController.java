@@ -137,19 +137,12 @@ public class UserController {
 	public String pagingUserAjax(@RequestParam(defaultValue = "1") int page,
 									@RequestParam(defaultValue = "5")int pageSize,
 										Model model) {
-		logger.debug("page : {}, pageSize : {} ", page, pageSize);
+		
 		
 		PageVo pageVo = new PageVo(page, pageSize); 
 		
-		Map<String, Object> map = userService.selectPagingUser(pageVo);
-		
-		int userCnt = (int) map.get("userCnt");
-		
-		int pagination = (int) Math.ceil((double)userCnt/pageSize);
-		
-		model.addAttribute("userList", map.get("userList"));		
-		model.addAttribute("pagination", pagination);
-		model.addAttribute("pageVo", pageVo);
+	
+		model.addAllAttributes(userService.selectPagingUser(pageVo));
 		
 		//문자열로 만들어주는 jsonView 쪽
 		return "jsonView";
@@ -163,7 +156,8 @@ public class UserController {
 		
 		PageVo pageVo = new PageVo(page, pageSize); 
 		
-		model.addAttribute(userService.selectPagingUser(pageVo));
+		model.addAllAttributes(userService.selectPagingUser(pageVo));
+		
 		
 		//문자열로 만들어주는 jsonView 쪽
 		return "user/pagingUserAjaxHtml";

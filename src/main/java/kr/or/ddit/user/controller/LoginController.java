@@ -29,13 +29,18 @@ public class LoginController {
 	
 //	String userid = req.getParameter("userid");
 //	@RequestMapping("process")
-	public String process(String userid, String pass, int price) {
-		logger.debug("userid : {}",userid);
-		logger.debug("pass : {}", pass);
-		logger.debug("price : {}",price);
-		return "";
+//	public String process(String userid, String pass, int price) {
+//		logger.debug("userid : {}",userid);
+//		logger.debug("pass : {}", pass);
+//		logger.debug("price : {}",price);
+//		return "";
+//	}
+	
+	@RequestMapping(path="main")
+	public String mainView() {
+		return "main";
 	}
-
+	
 	//post 메소드만 처리하도록 설정
 	@RequestMapping(path="process", method= {RequestMethod.POST})
 	public String process(UserVo userVo, HttpSession session, RedirectAttributes ra) {

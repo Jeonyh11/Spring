@@ -5,7 +5,7 @@
    <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
    <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	
-	<script src="/js/jquery/jquery-1.12.4.js"></script>
+	<script src="${cp }/js/jquery-1.12.4.js"></script>
 
 	<script>
 		$(function() {

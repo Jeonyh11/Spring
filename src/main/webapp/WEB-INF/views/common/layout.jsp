@@ -21,7 +21,7 @@
 
 	<%@ include file="/WEB-INF/views/common/common_lib.jsp" %>
 	
-	<script src="/js/jquery/jquery-1.12.4.js"></script>
+	<script src="${cp }/js/jquery-1.12.4.js"></script>
 	
 	
 </head>

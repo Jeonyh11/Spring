@@ -8,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import kr.or.ddit.common.model.PageVo;
@@ -22,6 +23,16 @@ public class UserServiceTest extends ModelTestConfig{
 	@Resource(name = "userService")
 	private UserService userService;
 	
+	
+	@Before
+	public void setUp() { 
+		UserVo userVo= new UserVo("ddit_n","테스트","brownPass",new Date(), "테스트","테스트"
+				,"주소2","12","fsd.png","fdsf");
+		
+		userService.insertUser(userVo);
+		
+		userService.deleteUser("ddit_n");
+	}
 
 	
 	@Test

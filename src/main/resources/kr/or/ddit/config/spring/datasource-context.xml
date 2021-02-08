@@ -3,9 +3,13 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 
 	 
 	 <context:property-placeholder 
@@ -19,11 +23,11 @@
 	 	<property name="initialSize" value="3"></property>
 	 </bean>
 	 
-	 <!--  class 이름 class이름
-	 		FactoryBean 인터페이스를 구현한 클래스를 스플이 빈으로 등록할 경우
-	 		FactoryBean 인터페이스의 getObject 메소드가 리턴하는 객체를 스프링 빈으로 등록한다
+<!-- 	   class 이름 class이름  -->
+<!-- 	 		FactoryBean 인터페이스를 구현한 클래스를 스플이 빈으로 등록할 경우 -->
+<!-- 	 		FactoryBean 인터페이스의 getObject 메소드가 리턴하는 객체를 스프링 빈으로 등록한다 -->
 	 		
-	 		SqlSessionFactory 스프링 빈은 SqlSessionFactoryBean -->
+<!-- 	 		SqlSessionFactory 스프링 빈은 SqlSessionFactoryBean --> 
 	 
 	 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 	 	<property name="configLocation" 
@@ -34,4 +38,28 @@
 	 <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 	 	<constructor-arg ref="sqlSessionFactory"></constructor-arg>
 	 </bean>
+	 
+<!-- 	 bean 선언 순서는 중요하지 않다  -->
+<!-- 	 다른 설정파일에 선언한 스프링 빈도 참조하는게 가능하다 -->
+	 <bean id="transactionManager" 
+	 	class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+	 	<property name="dataSource" ref="dataSource"></property>
+	 </bean>
+	 
+<!-- 	 advice : 공통의 관심사-->
+<!-- 		선언적 트랜잭션 : 개발자가 별도로 commit, rollback을 호출하지 않음 -->
+<!-- 					  상황에 따라서 자동으로 commit, rollback이 됨 -->
+<!-- 					  commit : pointcut으로 설정된 메소드가 실행될 때 해당 메소드에서 -->
+<!-- 					  		   RuntimeException이 발생하지 않고 정상적으로 실행 될경우 -->
+<!-- 					  rollback : RuntimeException이 발생될 때  -->
+	 <tx:advice id="txAdvice" transaction-manager="transactionManager">
+	 	<tx:attributes>
+	 		<tx:method name="*"/>
+	 	</tx:attributes>
+	 </tx:advice>
+	 
+<!-- 	 advisor : adivice + pointcut -->
+	 <aop:config>
+	 	<aop:advisor advice-ref="txAdvice" pointcut="execution(* kr.or.ddit..service.*.*(..))"/>
+	 </aop:config>
 </beans>

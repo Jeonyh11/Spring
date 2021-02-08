@@ -8,15 +8,30 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 	
-	<script src="/js/jquery/jquery-1.12.4.js"></script>
-	
 	<script>
+	
+	$(function() {
+		pagingUserAjax(1,5);
+		console.log("html ajax 로 왔음11111 ");
+		$("#userTbody").on('click', '.user' , function() {
+			// this : 클릭 이벤트가 발생한 element
+			// data-속성명  data-userid, 속성명은 대소문자 무시하고 소문자로 인식
+			// ex ] data-userId ==> data-userid로 인식
+			var userid = $(this).data("userid");
+			$('#userid').val(userid);
+			$('#frm').submit();
+		})
+	});
+	
+	function pagingUserAjax(page, pageSize) {
 	//ajax를 통해 사용자 리스트를 가져온다 1page, 5pageSize
 	$.ajax({
 		//url : "/user/pagingUserAjax",
 		url : "/user/pagingUserAjaxHtml",
-		data : "page=1&pageSize=5",
-		dataType:"json" ,
+		data : "page="+page+"&pageSize="+pageSize ,
+		
+		//data : "page=1&pageSize=5",
+// 		dataType:"json" ,
 		success : function(data){
 			
 // 			var html ="";
@@ -31,7 +46,7 @@
 				
 // 			});
 
-			
+			console.log("html ajax 로 왔음222222 ");
 			var html = data.split("##########");
 			
 			$("#userTbody").html(html[0]);
@@ -41,21 +56,7 @@
 		}
 		
 	});
-	
-		// 문서 로딩이 완료되고 나서 실행되는 영역
-		$(function() {
-			pagingUserAjax(1,5);
-			
-			$("#userTbody").on('click', ".user", function() {
-				// this : 클릭 이벤트가 발생한 element
-				// data-속성명  data-userid, 속성명은 대소문자 무시하고 소문자로 인식
-				// ex ] data-userId ==> data-userid로 인식
-				var userid = $(this).data("userid");
-				$('#userid').val(userid);
-				$('#frm').submit();
-			})
-		});
-		
+	}
 		
 	</script>
 
@@ -78,7 +79,9 @@
 									<th>사용자 별명</th>
 									<th>등록일시</th>
 								</tr>
-								<tbody id="userTbody"></tbody>
+								<tbody id="userTbody">
+								
+								</tbody>
 								
 					
 							</table>
@@ -94,8 +97,4 @@
 						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>
-</body>
-</html>
+	

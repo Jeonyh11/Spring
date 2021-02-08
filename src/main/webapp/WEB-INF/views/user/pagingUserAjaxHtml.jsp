@@ -7,32 +7,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-	
-	<script src="/js/jquery/jquery-1.12.4.js"></script>
-	
-	<script>
-		// 문서 로딩이 완료되고 나서 실행되는 영역
-		$(function(){
-			$(".user").on('click', function() {
-				// this : 클릭 이벤트가 발생한 element
-				// data-속성명  data-userid, 속성명은 대소문자 무시하고 소문자로 인식
-				// ex ] data-userId ==> data-userid로 인식
-				var userid = $(this).data("userid");
-				$('#userid').val(userid);
-				$('#frm').submit();
-			})
-		});
-	</script>
 
-
-
-	<form id="frm" action="${cp}/user/detailTiles">
-	
-		<input type="hidden" id="userid" name="userid" value=""/>
-
-	</form>
-
-	
 							
 								<c:forEach items="${userList }" var="user">
 									<tr class ="user" data-userid="${user.userid }">
@@ -44,7 +19,7 @@
 									</tr>
 								</c:forEach>
 								
-					#################
+					##########
 					
 								<li class="prev"><a href="${cp}/user/pagingUser?page=1&pageSize=${pageVo.pageSize}">«</a></li>
 								
