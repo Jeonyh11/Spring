@@ -1,0 +1,15 @@
+
+read   => ItemReader
+process => ItemProcessor
+writer => ItemWriter
+
+K ==> KEY
+
+V ==> Value
+
+T ==> Type
+
+I ==> IN
+O ==> OUT
+
+persistent ==> (db) 저장되어 기록이 남는것 <> 반대 되는 개념 = 메모리

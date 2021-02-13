@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:task="http://www.springframework.org/schema/task"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd
+      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+   <!-- @Resource, @Autowired, @Ineject 어노테이션을 통해 주입되는 빈을 처리해준다
+       <context:component-scan> 엘레멘트를 사용할 경우 별도 선언은 필요 없다
+       component-scan에 해당 내용이 등록됨 -->
+   <context:annotation-config />
+
+   <bean id="rangerScheduler" class="kr.or.ddit.batch.ranger.RangerScheduler" />
+   
+   <!-- scheduler 등록 -->
+   <task:scheduler id="scheduler" />
+   
+   <!-- scheduler를 통해 어떤 작업(task)을 어떤 주기로 실행할지 -->
+   <!-- 
+      cron : unix, linux에서 사용하는 프로그램
+          주기 설정 : 초  분   시  일  월  요일
+                    5   *   *   *  *   *  : 매 5초마다 -> 1분 5초, 2분 5초, 3분 5초 ....
+                   */5  *   *   *  *   *  : 5초에 한번씩 ==> 실행시간에 따라 시간이 달라질 수 있다 
+                                     (ex: 1분 2초에 시작할 경우 => 1분 7초, 1분 12초 .... ) 
+   -->
+   <task:scheduled-tasks scheduler="scheduler">
+      <task:scheduled ref="rangerScheduler" method="rangerTask" cron="*/5 * * * * *"/>
+   </task:scheduled-tasks>
+   
+</beans>
